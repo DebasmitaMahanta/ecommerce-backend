@@ -9,7 +9,7 @@ router.post("/register", registerUser);
 router.post("/register-admin", protect, admin, registerAdmin);
 router.post("/login", loginUser);
 
-// Development route to make user admin (remove in production)
+
 router.put("/make-admin/:id", protect, admin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

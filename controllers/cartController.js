@@ -1,6 +1,4 @@
 import Cart from "../models/Cart.js";
-
-// Add to Cart
 export const addToCart = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
@@ -29,13 +27,13 @@ export const addToCart = async (req, res) => {
   }
 };
 
-// Get Cart
+
 export const getCart = async (req, res) => {
   const cart = await Cart.findOne({ user: req.user._id }).populate("items.product");
   res.json(cart);
 };
 
-// Update Quantity
+
 export const updateCartItem = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
@@ -58,7 +56,7 @@ export const updateCartItem = async (req, res) => {
   }
 };
 
-// Remove Item
+
 export const removeFromCart = async (req, res) => {
   try {
     const { productId } = req.body;

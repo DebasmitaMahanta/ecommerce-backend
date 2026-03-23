@@ -1,7 +1,6 @@
 import Order from "../models/Order.js";
 import Cart from "../models/Cart.js";
 
-// Place Order (Checkout)
 export const placeOrder = async (req, res) => {
   try {
     const { shippingAddress, paymentMethod } = req.body;
@@ -13,7 +12,7 @@ export const placeOrder = async (req, res) => {
     }
 
     const totalPrice = cart.items.reduce(
-      (acc, item) => acc + item.quantity * 100, // demo price
+      (acc, item) => acc + item.quantity * 100, 
       0
     );
 
@@ -25,7 +24,7 @@ export const placeOrder = async (req, res) => {
       totalPrice
     });
 
-    // Clear Cart after order
+  
     cart.items = [];
     await cart.save();
 
@@ -36,19 +35,19 @@ export const placeOrder = async (req, res) => {
   }
 };
 
-// Get My Orders
+
 export const getMyOrders = async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
   res.json(orders);
 };
 
-// Get All Orders (Admin)
+
 export const getAllOrders = async (req, res) => {
   const orders = await Order.find().populate("user", "name email");
   res.json(orders);
 };
 
-// Update Order Status
+
 export const updateOrderStatus = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
