@@ -12,6 +12,9 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
       },
+      name: String,
+      price: Number,
+      image: String,
       quantity: {
         type: Number,
         required: true
@@ -19,14 +22,29 @@ const orderSchema = new mongoose.Schema({
     }
   ],
   shippingAddress: {
+    fullName: String,
     address: String,
     city: String,
+    state: String,
     postalCode: String,
-    country: String
+    country: String,
+    phone: String
   },
   paymentMethod: {
     type: String,
-    default: "COD"
+    default: "COD",
+    enum: ["COD", "Card", "UPI", "Razorpay"]
+  },
+  paymentInfo: {
+    razorpayOrderId: String,
+    razorpayPaymentId: String,
+    razorpaySignature: String
+  },
+  subtotal: Number,
+  taxPrice: Number,
+  shippingPrice: {
+    type: Number,
+    default: 0
   },
   totalPrice: {
     type: Number,
@@ -36,10 +54,12 @@ const orderSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  paidAt: Date,
   isDelivered: {
     type: Boolean,
     default: false
-  }
+  },
+  deliveredAt: Date
 }, { timestamps: true });
 
 export default mongoose.model("Order", orderSchema);
